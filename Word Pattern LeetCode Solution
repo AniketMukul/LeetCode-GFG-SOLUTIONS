@@ -1,0 +1,41 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s)
+    {
+        unordered_map<char,string>mp1;
+        unordered_map<string,char>mp2;
+        int ptr1=0;
+        int ptr2=0;
+        for(int i=0;i<pattern.length();i++)
+        {
+            string substr;
+            if(i!=pattern.length()-1)
+            {
+              ptr2=s.find(' ',ptr1);
+              substr=s.substr(ptr1,ptr2-ptr1);
+            }
+            else
+            {
+                substr=s.substr(ptr1,s.length()-ptr1);
+            }
+            if(substr=="")
+            {
+                return false;
+            }
+            if(!mp1.count(pattern[i]))
+            {
+                mp1[pattern[i]]=substr;
+            }
+            if(!mp2.count(substr))
+            {
+                mp2[substr]=pattern[i];
+            }
+            if(mp1[pattern[i]]!=substr || mp2[substr]!=pattern[i])
+            {
+                return false;
+            }
+            ptr1=ptr2+1;
+        }
+        return true;
+    }
+};
